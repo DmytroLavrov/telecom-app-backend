@@ -8,8 +8,11 @@ import {
 } from '../controllers/SubscriberController.js';
 import { subscriberValidation } from '../validations/SubscriberValidation.js';
 import handleValidationErrors from '../middlewares/handleValidationErrors.js';
+import checkAdminAuth from '../middlewares/checkAdminAuth.js';
 
 const router = express.Router();
+
+router.use(checkAdminAuth);
 
 router.get('/', getAllSubscribers);
 router.get('/:id', getSubscriberDetailsById);
