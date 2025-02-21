@@ -2,11 +2,13 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
 
 import AdminRoutes from './routes/AdminRoutes.js';
 import SubscriberRoutes from './routes/SubscriberRoutes.js';
 import CityRoutes from './routes/CityRoutes.js';
 import CallRoutes from './routes/CallRoutes.js';
+import { specs } from './swagger/swagger.js';
 
 dotenv.config();
 
@@ -21,6 +23,8 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use('/auth', AdminRoutes);
 app.use('/subscribers', SubscriberRoutes);
