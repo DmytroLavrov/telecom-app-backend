@@ -15,7 +15,12 @@ const calculateCallCost = async (cityId, duration, timeOfDay) => {
   let durationInMinutes = duration / 60;
   let cost = durationInMinutes * ratePerMinute;
 
-  const discount = city.discounts.find((d) => durationInMinutes >= d.duration);
+  const discount = city.discounts
+    .filter((d) => durationInMinutes >= d.duration)
+    .reduce(
+      (best, d) => (d.discountRate > (best?.discountRate ?? 0) ? d : best),
+      null,
+    );
   if (discount) {
     cost *= 1 - discount.discountRate;
   }
